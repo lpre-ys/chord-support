@@ -1,7 +1,19 @@
 import pkg from './package'
 
+const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
+  router: {
+    base: '/chord-support/'
+  }
+} : {}
+
+const favicon = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
+   rel: 'icon', type: 'image/x-icon', href: '/chord-support/favicon.ico'
+} : {
+   rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'
+}
+
 export default {
-  mode: 'universal',
+  mode: 'spa',
 
   /*
   ** Headers of the page
@@ -14,7 +26,7 @@ export default {
       { hid: 'description', name: 'description', content: pkg.description }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      favicon
     ]
   },
 
@@ -59,5 +71,6 @@ export default {
     */
     extend(config, ctx) {
     }
-  }
+  },
+  ... routerBase
 }
