@@ -28,7 +28,7 @@ import Navi from '~/components/Navi.vue'
 
 const circleOfFifth= ['F', 'C', 'G', 'D', 'A', 'E', 'B', 'G♭', 'D♭', 'A♭', 'E♭', 'B♭'];
 const alias = {7: 'F♯', 8: 'C♯', 9: 'G♯', 10: 'D♯', 11: 'A♯'};
-const types = ['m', '', '△'];
+const types = ['m7', '7', '△'];
 
 export default {
   components: {
