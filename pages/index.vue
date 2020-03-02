@@ -1,6 +1,7 @@
 <template>
-  <section class="section">
-    <div class="container">
+  <div class="container">
+    <Navi />
+    <section class="section">
       <button class="button is-primary is-large" v-on:click="choiceChord">EXEC</button>
       <div class="options is-size-4">
         <p class="button is-text is-size-4" v-on:click="toggleOptions">
@@ -27,22 +28,21 @@
           <p class="notification is-info is-size-3" v-else>{{ chord[0] }}</p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </template>
 
 <script>
-import Hero from '~/components/Hero.vue'
+import Navi from '~/components/Navi.vue'
 
-const notes = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
 const triadTypes = ['', 'm', 'aug', 'dim'];
 const seventhTypes = ['△7', 'm7', '7', 'm7^(♭5)']
-const accidentals = ['', '♯', '♭'];
-
+const circleOfFifth= ['F', 'C', 'G', 'D', 'A', 'E', 'B', 'G♭', 'D♭', 'A♭', 'E♭', 'B♭'];
+const alias = {7: 'F♯', 8: 'C♯', 9: 'G♯', 10: 'D♯', 11: 'A♯'}
 
 export default {
   components: {
-    Hero
+    Navi
   },
   data: function () {
     return {
@@ -72,8 +72,12 @@ export default {
       this.isShowOptions = !this.isShowOptions;
     },
     makeChord: function () {
-      const note = notes[Math.floor(Math.random() * notes.length)]
-                   + accidentals[Math.floor(Math.random() * accidentals.length)];
+      const noteIndex = Math.floor(Math.random() * circleOfFifth.length);
+      const isUseAlias = (Math.random() * 2) > 1 ? true : false;
+      let note = circleOfFifth[noteIndex];
+      if (isUseAlias && alias[noteIndex]) {
+        note = alias[noteIndex];
+      }
       let types = [];
       if (this.kinds.isTriad) {
         types = types.concat(triadTypes);
@@ -81,7 +85,7 @@ export default {
       if (this.kinds.isSeventh) {
         types = types.concat(seventhTypes);
       }
-      const type = types[Math.floor(Math.random() * types.length)];
+      const type = types.length > 0 ? types[Math.floor(Math.random() * types.length)] : '';
 
       return note + type;
     }
