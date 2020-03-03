@@ -59,9 +59,9 @@ export default {
       const results = [];
       console.log(startIndex);
       for (let i = 0; i < 3; i++) {
-        let index = startIndex + i;
-        if (index >= circleOfFifth.length) {
-          index -= circleOfFifth.length;
+        let index = startIndex - i;
+        if (index < 0) {
+          index += circleOfFifth.length;
         }
         const note = circleOfFifth[index];
         const type = types[i];
